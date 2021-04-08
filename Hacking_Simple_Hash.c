@@ -5,6 +5,7 @@
 //Importing all libraries
 #define _XOPEN_SOURCE    //So it was written in the documentation, this is an addition to the bottom line
 #include <unistd.h>      //Hashing library
+#include <crypt.h>       //Crypting library
 #include <stdio.h>       //Standard library (input / output)
 #include <string.h>      //Library for working with strings
 
@@ -19,10 +20,10 @@ int main(int argc, char **argv) //Function with data entry via command line
 
 //Dictionary of Symbols
     char alf[52] = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-// Variables for further work (password - password storage, salt - salt storage, 
-// num - number of the current character in the password array, 
+// Variables for further work (password - password storage, salt - salt storage,
+// num - number of the current character in the password array,
 // j - copy of i in the main loop, rest - remainder of division)
-    char password[5], salt[2];
+    char password[6], salt[2];
     int num, j, rest;
 //Getting salt
     salt[0] = argv[1][0];
@@ -38,7 +39,7 @@ int main(int argc, char **argv) //Function with data entry via command line
 
 
 //Main loop
-    for (int i = 0; i < 380204033; i++)
+    for (int i = 7311614; i < 380204033; i++)
     {
 //Zeroing Variables
         num = 0;
@@ -51,6 +52,7 @@ int main(int argc, char **argv) //Function with data entry via command line
             password[num] = alf[rest]; //Assigning a symbol to a password
             num++;                     //Add the next character
         }
+        printf("%s - %s\n", crypt(password, salt), password);
         if (strcmp(crypt(password, salt), argv[1]) == 0) //If the encrypted text and the input match, stop and output
         {
             printf("Password cracking complete\nThe password is: %s\nGoodbye\n", password);
